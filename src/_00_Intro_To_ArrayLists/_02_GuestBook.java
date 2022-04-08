@@ -1,6 +1,16 @@
 package _00_Intro_To_ArrayLists;
 
-public class _02_GuestBook {
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public class _02_GuestBook implements ActionListener {
     /*
      * Create a GUI with two buttons. One button reads "Add Name" and the other
      * button reads "View Names". When the add name button is clicked, display
@@ -13,5 +23,63 @@ public class _02_GuestBook {
      * Guest #3: Greg Ganders
      * Guest #4: Donny Doners
      */
+	ArrayList<String> guests = new ArrayList<String>();
+	JFrame frame = new JFrame();
+	JPanel panel = new JPanel();
+	JButton add = new JButton();
+	JButton view = new JButton();
+	
+	public static void main(String[] args) {
+		_02_GuestBook gb = new _02_GuestBook();
+		gb.run();
+	
+	}
+	
+	public void run() {
+		add.setText("Add Name");
+		view.setText("View Names");
+		add.addActionListener(this);
+		view.addActionListener(this);
+		panel.add(add);
+		panel.add(view);
+		frame.add(panel);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton buttonClicked = (JButton)e.getSource();
+		if (buttonClicked == add) {
+			//System.out.println("Stuff");
+			addGuests();
+		}
+		else if (buttonClicked == view) {
+			//System.out.println("More Stuff");
+			viewGuests();
+		}
+		
+	}
+	
+	public void viewGuests() {
+		if (guests.size() == 0) {
+			JOptionPane.showMessageDialog(null, "There are no guests at this time");
+		}
+		else {
+			String message = "";
+			for (int i = 0; i < guests.size(); i++) {
+				message += "Guest #" + (i + 1) + ": " + guests.get(i) + "\n";
+			}
+			JOptionPane.showMessageDialog(null, message);
+		}
 
+	}
+	
+	public void addGuests() {
+		String name = JOptionPane.showInputDialog("Enter a name for the guest book:");
+		guests.add(name);
+	}
+	
+	
 }
